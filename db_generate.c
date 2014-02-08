@@ -169,7 +169,10 @@ void chklvalue(ParseContext *c, PVAL *pv)
 void code_global(ParseContext *c, PValOp fcn, PVAL *pv)
 {
     putcbyte(c, OP_LIT);
-    putclong(c, (VMVALUE)pv->u.sym);
+    if (pv->u.sym->storageClass == SC_VARIABLE)
+        putclong(c, (VMVALUE)pv->u.sym);
+    else
+        putclong(c, pv->u.sym->value);
     switch (fcn) {
     case PV_ADDR:
         // just need the address

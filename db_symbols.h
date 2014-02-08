@@ -12,7 +12,8 @@
 /* storage class ids */
 typedef enum {
     SC_CONSTANT,
-    SC_VARIABLE
+    SC_VARIABLE,
+    SC_HWVARIABLE
 } StorageClass;
 
 /* forward type declarations */

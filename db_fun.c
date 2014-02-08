@@ -41,23 +41,23 @@ void EnterBuiltInSymbols(ParseContext *c)
 {
 #ifdef PROPELLER_GCC
     /* variables */
-    AddGlobal(c, "clkfreq",  SC_VARIABLE,   0x00000000);
-    AddGlobal(c, "par",      SC_VARIABLE,   COG_BASE + 0x1f0 * 4);
-    AddGlobal(c, "cnt",      SC_VARIABLE,   COG_BASE + 0x1f1 * 4);
-    AddGlobal(c, "ina",      SC_VARIABLE,   COG_BASE + 0x1f2 * 4);
-    AddGlobal(c, "inb",      SC_VARIABLE,   COG_BASE + 0x1f3 * 4);
-    AddGlobal(c, "outa",     SC_VARIABLE,   COG_BASE + 0x1f4 * 4);
-    AddGlobal(c, "outb",     SC_VARIABLE,   COG_BASE + 0x1f5 * 4);
-    AddGlobal(c, "dira",     SC_VARIABLE,   COG_BASE + 0x1f6 * 4);
-    AddGlobal(c, "dirb",     SC_VARIABLE,   COG_BASE + 0x1f7 * 4);
-    AddGlobal(c, "ctra",     SC_VARIABLE,   COG_BASE + 0x1f8 * 4);
-    AddGlobal(c, "ctrb",     SC_VARIABLE,   COG_BASE + 0x1f9 * 4);
-    AddGlobal(c, "frqa",     SC_VARIABLE,   COG_BASE + 0x1fa * 4);
-    AddGlobal(c, "frqb",     SC_VARIABLE,   COG_BASE + 0x1fb * 4);
-    AddGlobal(c, "phsa",     SC_VARIABLE,   COG_BASE + 0x1fc * 4);
-    AddGlobal(c, "phsb",     SC_VARIABLE,   COG_BASE + 0x1fd * 4);
-    AddGlobal(c, "vcfg",     SC_VARIABLE,   COG_BASE + 0x1fe * 4);
-    AddGlobal(c, "vscl",     SC_VARIABLE,   COG_BASE + 0x1ff * 4);
+    AddGlobal(c, "clkfreq",  SC_HWVARIABLE, 0x00000000);
+    AddGlobal(c, "par",      SC_HWVARIABLE, COG_BASE + 0x1f0 * 4);
+    AddGlobal(c, "cnt",      SC_HWVARIABLE, COG_BASE + 0x1f1 * 4);
+    AddGlobal(c, "ina",      SC_HWVARIABLE, COG_BASE + 0x1f2 * 4);
+    AddGlobal(c, "inb",      SC_HWVARIABLE, COG_BASE + 0x1f3 * 4);
+    AddGlobal(c, "outa",     SC_HWVARIABLE, COG_BASE + 0x1f4 * 4);
+    AddGlobal(c, "outb",     SC_HWVARIABLE, COG_BASE + 0x1f5 * 4);
+    AddGlobal(c, "dira",     SC_HWVARIABLE, COG_BASE + 0x1f6 * 4);
+    AddGlobal(c, "dirb",     SC_HWVARIABLE, COG_BASE + 0x1f7 * 4);
+    AddGlobal(c, "ctra",     SC_HWVARIABLE, COG_BASE + 0x1f8 * 4);
+    AddGlobal(c, "ctrb",     SC_HWVARIABLE, COG_BASE + 0x1f9 * 4);
+    AddGlobal(c, "frqa",     SC_HWVARIABLE, COG_BASE + 0x1fa * 4);
+    AddGlobal(c, "frqb",     SC_HWVARIABLE, COG_BASE + 0x1fb * 4);
+    AddGlobal(c, "phsa",     SC_HWVARIABLE, COG_BASE + 0x1fc * 4);
+    AddGlobal(c, "phsb",     SC_HWVARIABLE, COG_BASE + 0x1fd * 4);
+    AddGlobal(c, "vcfg",     SC_HWVARIABLE, COG_BASE + 0x1fe * 4);
+    AddGlobal(c, "vscl",     SC_HWVARIABLE, COG_BASE + 0x1ff * 4);
     
     /* functions */
     AddGlobal(c, "waitcnt",  SC_VARIABLE,   (VMVALUE)bi_waitcnt);

@@ -127,17 +127,17 @@ static void DoLoad(System *sys)
     if (!(fp = VM_fopen(programName, "r")))
         VM_printf("error loading '%s'\n", programName);
     else {
+        VMVALUE lineNumber = 100;
         VM_printf("Loading '%s'\n", programName);
         BufInit();
         while (VM_fgets(sys->lineBuf, sizeof(sys->lineBuf), fp) != NULL) {
-            VMVALUE lineNumber;
             char *token;
             sys->linePtr = sys->lineBuf;
             if ((token = NextToken(sys)) != NULL) {
-                if (ParseNumber(token, &lineNumber))
-                    BufAddLineN(lineNumber, sys->linePtr);
-                else
-                    VM_printf("expecting a line number: %s\n", token);
+                if (!ParseNumber(token, &lineNumber))
+                    sys->linePtr = sys->lineBuf;
+                BufAddLineN(lineNumber, sys->linePtr);
+                lineNumber += 10;
             }
         }
         VM_fclose(fp);
@@ -215,10 +215,13 @@ static char *NextToken(System *sys)
 
 static int ParseNumber(char *token, VMVALUE *pValue)
 {
+    VMVALUE value;
     int ch;
-    *pValue = 0;
+    value = 0;
     while ((ch = *token++) != '\0' && isdigit(ch))
-        *pValue = *pValue * 10 + ch - '0';
+        value = value * 10 + ch - '0';
+    if (ch == '\0')
+        *pValue = value;
     return ch == '\0';
 }
 
