@@ -165,7 +165,6 @@ VMVALUE StoreCode(ParseContext *c)
 
     /* prepare the buffer for the next function */
     image->codeBuf = image->codeFree;
-    image->codeFree = image->codeBuf;
 
     /* empty the local heap */
     c->heapFree = c->heapBase;
