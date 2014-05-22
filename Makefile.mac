@@ -1,30 +1,73 @@
-OBJS = \
-ebasic.o \
+COMPILER_OBJS = \
 db_compiler.o \
-db_fun.o \
-db_edit.o \
 db_expr.o \
 db_generate.o \
 db_image.o \
 db_scan.o \
 db_statement.o \
 db_symbols.o \
-db_system.o \
-db_vmint.o \
+db_fun.o
+
+VM_OBJS = \
+db_vmint.o
+
+COMPILER_HDRS = \
+db_compiler.h \
+db_image.h \
+db_symbols.h \
+db_system.h \
+db_types.h
+
+VM_HDRS = \
+db_image.h \
+db_system.h \
+db_types.h \
+db_vm.h \
+db_vmdebug.h
+
+OBJS = \
+ebasic.o \
+db_edit.o \
 editbuf.o \
+db_system.o \
+osint_posix.o
+
+COMPILE_OBJS = \
+compile.o \
+osint_posix.o
+
+EXECUTE_OBJS = \
+execute.o \
 osint_posix.o
 
 OBJS += db_vmdebug.o
 
+LIBS = libcompiler.a libvm.a
+
 #CFLAGS = -Wall -Os -DMAC -m32
 CFLAGS = -Wall -DMAC -m32 -g
 CFLAGS += -DLOAD_SAVE
+LFLAGS = $(CFLAGS) -L.
+
+all:	ebasic compile execute
+
+ebasic:	$(OBJS) $(LIBS)
+	cc $(LFLAGS) -o $@ $(OBJS) -lcompiler -lvm
+
+compile:	$(COMPILE_OBJS) libcompiler.a $(COMPILER_HDRS)
+	cc $(LFLAGS) -o $@ $(COMPILE_OBJS) -lcompiler
+
+execute:	$(EXECUTE_OBJS) libvm.a $(VM_HEADERS)
+	cc $(LFLAGS) -o $@ $(EXECUTE_OBJS) -lvm
+
+libcompiler.a:	$(COMPILER_OBJS) $(COMPILER_HDRS)
+	ar crs $@ $(COMPILER_OBJS)
+
+libvm.a:	$(VM_OBJS) $(VM_HEADERS)
+	ar crs $@ $(VM_OBJS)
 
 %.o:	%.c
 	cc $(CFLAGS) -c -o $@ $<
-
-ebasic:	$(OBJS)
-	cc $(CFLAGS) -o $@ $(OBJS)
 
 run:	ebasic
 	./ebasic
@@ -33,4 +76,4 @@ debug:	ebasic
 	lldb ebasic
 
 clean:
-	rm -f *.o ebasic
+	rm -f *.o *.a ebasic
